@@ -69,6 +69,8 @@ public:
 		return true;
 	}
 
+	int count(T val) { return find(root, val); }
+
 	bool find(T val) { return find(root, val); }
 	bool find(Node *t, T val) {
 		if (!t) return false;
