@@ -102,6 +102,26 @@ public:
 		return indexof(t->l, val);
 	}
 
+	T biggestlessthan(int val) { return biggestlessthan(root, val); }
+	T biggestlessthan(Node *t, int val) {
+		Node *l, *r;
+		split(root, val, l, r);
+		if (!l) return -1;
+		T result = getmax(l);
+		root = merge(l, r);
+		return result;
+	}
+
+	T smallestgreaterthan(int val) { return smallestgreaterthan(root, val); }
+	T smallestgreaterthan(Node *t, int val) {
+		Node *l, *r;
+		split(root, val + 1, l, r);
+		if (!r) return -1;
+		T result = getmin(r);
+		root = merge(l, r);
+		return result;
+	}
+
 	No_overflow nth_sum(int n) {
 		T val = nth_element(root, n);
 		Node *l, *r;
