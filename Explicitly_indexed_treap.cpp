@@ -106,8 +106,9 @@ public:
 	T biggestlessthan(Node *t, int val) {
 		Node *l, *r;
 		split(root, val, l, r);
-		if (!l) return -1;
-		T result = getmax(l);
+		T result;
+		if (!l) result = -1;
+		else result = getmax(l);
 		root = merge(l, r);
 		return result;
 	}
@@ -116,8 +117,9 @@ public:
 	T smallestgreaterthan(Node *t, int val) {
 		Node *l, *r;
 		split(root, val + 1, l, r);
-		if (!r) return -1;
-		T result = getmin(r);
+		T result;
+		if (!r) result = -1;
+		else result = getmin(r);
 		root = merge(l, r);
 		return result;
 	}
