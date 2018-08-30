@@ -42,12 +42,10 @@ public:
 
 	Treap() {
 		root = nullptr;
-		srand(123454321);
 	}
 
 	Treap(vector<T> &v) {
 		root = nullptr;
-		srand(123454321);
 		for (int i = 0; i < v.size(); i++) insert(v[i], i);
 	}
 
@@ -91,7 +89,7 @@ public:
 	}
 
 	void addition(T delta, int ind) { addition(root, delta, ind, ind); }
-	void addition(T delta, int l, int r) { adition(root, delta, l, r); }
+	void addition(T delta, int l, int r) { addition(root, delta, l, r); }
 	void addition(Node *t, T delta, int l, int r) {
 		Node *t1, *t2, *t3;
 		split(t, l, t1, t2);
@@ -146,10 +144,12 @@ public:
 
 	T valueof(int idx) { return valueof(root, idx); }
 	T valueof(Node *t, int idx) {
-		int lsz = getcount(t->l);
-		if (idx == lsz) return t->val;
-		if (idx < lsz) return valueof(t->l, idx);
-		return valueof(t->r, idx - lsz - 1);
+		Node *t1, *t2, *t3;
+		split(root, idx, t1, t2);
+		split(t2, 1, t2, t3);
+		T ans = t2->val;
+		root = merge(merge(t1, t2), t3);
+		return ans;
 	}
 
 	void print() { print(root); cout << endl; }
@@ -159,6 +159,15 @@ public:
 		print(t->l);
 		cout << t->val << " ";
 		print(t->r);
+	}
+
+	void load(vector<T> &v) { load(root, v); }
+	void load(Node*t, vector<T> &v) {
+		if (!t) return;
+		t->push();
+		load(t->l, v);
+		v.push_back(t->val);
+		load(t->r, v);
 	}
 
 	T getmin() {
