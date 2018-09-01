@@ -28,9 +28,8 @@ public:
 				if (r) r->rev ^= true;
 			}
 			if (delta) {
-				val += delta;
-				if (l) l->delta += delta;
-				if (r) r->delta += delta;
+				if (l) l->val += delta, l->sm += delta * l->sz, l->delta += delta, l->mini += delta, l->maxi += delta;
+				if (r) r->val += delta, r->sm += delta * r->sz, r->delta += delta, r->mini += delta, r->maxi += delta;
 				delta = 0;
 			}
 		}
@@ -88,13 +87,17 @@ public:
 		root = merge(merge(t1, t2), t3);
 	}
 
-	void addition(T delta, int ind) { addition(root, delta, ind, ind); }
-	void addition(T delta, int l, int r) { addition(root, delta, l, r); }
-	void addition(Node *t, T delta, int l, int r) {
+	void addition(int ind, T delta) { addition(root, ind, ind, delta); }
+	void addition(int l, int r, T delta) { addition(root, l, r, delta); }
+	void addition(Node *t, int l, int r, T delta) {
 		Node *t1, *t2, *t3;
 		split(t, l, t1, t2);
 		split(t2, r - l + 1, t2, t3);
 		t2->delta += delta;
+		t2->sm += delta * t2->sz;
+		t2->mini += delta;
+		t2->maxi += delta;
+		t2->val += delta;
 		root = merge(merge(t1, t2), t3);
 	}
 
