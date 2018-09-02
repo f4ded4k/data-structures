@@ -34,13 +34,13 @@ public:
 
 	void merge_r(int x, int y) {
 		int i = find_r(x); int j = find_r(y); if (i == j) return;
-		history.lazy_push({ i,parent[i] , j,size[j] });
+		history.push({ i,parent[i] , j,size[j] });
 		parent[i] = j; size[j] += size[i]; max_size = max(max_size, size[j]);
 		cnt--;
 	}
 
 	void revert() {
-		while (!history.empty()) {
+		while (history.size()) {
 			parent[get<0>(history.top())] = get<1>(history.top());
 			size[get<2>(history.top())] = get<3>(history.top());
 			history.pop();
