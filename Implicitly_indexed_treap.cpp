@@ -140,7 +140,7 @@ public:
 	void erase(int ind) {
 		Node *l, *r, *t;
 		split(root, ind, l, t);
-		split(t, ind + 1, t, r);
+		split(t, 1, t, r);
 		delete t;
 		root = merge(l, r);
 	}
